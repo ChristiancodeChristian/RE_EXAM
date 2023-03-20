@@ -6,6 +6,7 @@ import static java.lang.Integer.parseInt;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.partythermometer.mqtt.SimpleMqttClient;
 import com.example.partythermometer.mqtt.data.MqttMessage;
+import com.hivemq.client.mqtt.datatypes.MqttQos;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar bar_Z;
 
 
-
+    private Handler handler = new Handler();
 
 
 
@@ -184,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
                             valueY = valueY.substring(0, Math.min(valueY.length(), 5));
                             valueZ = valueZ.substring(0, Math.min(valueZ.length(), 5));
 
-                            //txtTemp.setText(String.format(valueX,",",valueY));
+
                             txtTemp.setText("X:"+valueX + " Y:"+valueY +" Z:"+ valueZ);
                             txt_xValue.setText(valueX);
                             txt_yValue.setText(valueY);
@@ -205,9 +207,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
                         }
                     });
+
+
+                    //new SimpleMqttClient.MqttPublish(activity,"APP/subscribe","1");
+
+
                 } catch(JSONException je) {
                     Log.e("JSON", "Error while deserializing payload", je);
                     showError("Invalid chat message received");
@@ -219,7 +225,51 @@ public class MainActivity extends AppCompatActivity {
                 showError("Unable to join topic");
             }
         });
+
+
     }
+
+    //method publish message to MQTT topic
+    private void publish(String topic, String payload) {
+
+        mqtt_client.publish(new SimpleMqttClient.MqttPublish(this, topic, payload) {
+
+            @Override
+            public void onSuccess() {
+                super.onSuccess();
+            }
+
+            @Override
+            public void onError(Throwable error) {
+                super.onError(error);
+                showError("Unable to publish topic.");
+            }
+        });
+    }
+
+    private JSONObject serializeMessage(String mode) throws JSONException {
+        JSONObject publish_msg = new JSONObject();
+        publish_msg.put("mode", mode);
+        return publish_msg;
+    }
+
+    //method MQTT publish mode
+    private void mqtt_publish_mode(String mode) {
+        JSONObject payload = null;
+        try {
+            payload = serializeMessage(mode);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        publish(mqtt_publishTopic, payload.toString());
+    }
+
+
+
+
+
+
+
 
     // Show Toast on error
     private void showError(String msg) {
@@ -242,4 +292,19 @@ public class MainActivity extends AppCompatActivity {
         return newMsg;
     }
     //endregion
+  /*  private void sendResponse() {
+        new SimpleMqttClient.MqttPublish(this,"APP/subscribe","messageTemp");
+        //client.publish("APP/subscribe", "1", MqttQos.AT_LEAST_ONCE);
+    }
+
+    private void scheduleResponse() {
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                sendResponse();
+            }
+        }, 200);
+    }*/
+
+
 }
