@@ -27,13 +27,6 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/im_Party"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/wgparty" />
-
         <TextView
             android:id="@+id/txt_DescitpionSeekBar"
             android:layout_width="match_parent"
@@ -44,22 +37,21 @@
             android:textSize="20sp" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/LinearXValue"
+            android:layout_width="match_parent"
+            android:layout_height="57dp"
             android:gravity="center"
             android:orientation="horizontal">
 
-            <SeekBar
-                android:id="@+id/bar_Temp"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
-                android:paddingVertical="20dp"
-                android:progressTint="#FFEB3B"
-                android:thumbTint="#FF9800" />
+            <ProgressBar
+                android:id="@+id/bar_X"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="242dp"
+                android:layout_height="33dp"
+                android:layout_weight="1" />
 
             <TextView
-                android:id="@+id/txt_CriticalTemp"
+                android:id="@+id/txt_xValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -67,6 +59,52 @@
                 android:textAlignment="textStart"
                 android:textSize="20sp" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LinearYValue"
+            android:layout_width="match_parent"
+            android:layout_height="57dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ProgressBar
+                android:id="@+id/bar_Y"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="242dp"
+                android:layout_height="33dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/txt_yValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="DummyText"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LinearZValue"
+            android:layout_width="match_parent"
+            android:layout_height="59dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ProgressBar
+                android:id="@+id/bar_Z"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="242dp"
+                android:layout_height="33dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/txt_zValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="DummyText"
+                android:textSize="20sp" />
         </LinearLayout>
 
 

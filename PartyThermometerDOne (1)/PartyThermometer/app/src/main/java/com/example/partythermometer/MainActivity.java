@@ -1,9 +1,13 @@
 package com.example.partythermometer;
 
+import static java.lang.Float.parseFloat;
+import static java.lang.Integer.parseInt;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,17 +18,26 @@ import com.example.partythermometer.mqtt.data.MqttMessage;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.util.UUID;
 
 
 public class MainActivity extends AppCompatActivity {
 
-
+    // private int criticalTemp = 25;
+    //private SeekBar barTemperature;
+    // private TextView txtCriticalTemp;
+    // private int oldCriticalTemp = -1;
     private TextView txtTemp;
-    private int criticalTemp = 25;
-    private SeekBar barTemperature;
-    private TextView txtCriticalTemp;
-    private int oldCriticalTemp = -1;
+    private TextView txt_xValue;
+    private TextView txt_yValue;
+    private TextView txt_zValue;
+
+    private ProgressBar bar_X;
+    private ProgressBar bar_Y;
+    private ProgressBar bar_Z;
+
+
+
+
 
 
     //region Constants
@@ -43,15 +56,40 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        txtTemp = findViewById(R.id.txt_Temp);
-        txtCriticalTemp = findViewById(R.id.txt_CriticalTemp);
-        barTemperature = findViewById(R.id.bar_Temp);
+/*     txtCriticalTemp = findViewById(R.id.txt_xValue);
+        barTemperature = findViewById(R.id.bar_X);
         barTemperature.setMin(0);
         barTemperature.setMax(50);
-        barTemperature.setProgress(criticalTemp);
+        barTemperature.setProgress(criticalTemp);*/
+
+
+        txtTemp = findViewById(R.id.txt_Temp);
+        txt_xValue = findViewById(R.id.txt_xValue);
+        txt_yValue = findViewById(R.id.txt_yValue);
+        txt_zValue = findViewById(R.id.txt_zValue);
+
+        bar_X = findViewById(R.id.bar_X);
+        bar_Y = findViewById(R.id.bar_Y);
+        bar_Z = findViewById(R.id.bar_Z);
+
+        bar_X.setMin(-20);
+        bar_X.setMax(20);
+
+        bar_Y.setMin(-20);
+        bar_Y.setMax(20);
+
+        bar_Z.setMin(-20);
+        bar_Z.setMax(20);
 
         txtTemp.setText("00.00");
+        txt_xValue.setText("00.00");
+        txt_yValue.setText("00.00");
+        txt_zValue.setText("00.00");
+
+
+
+
+
        //txtCriticalTemp.setText(String.valueOf(criticalTemp));
 
 
@@ -147,7 +185,27 @@ public class MainActivity extends AppCompatActivity {
                             valueZ = valueZ.substring(0, Math.min(valueZ.length(), 5));
 
                             //txtTemp.setText(String.format(valueX,",",valueY));
-                            txtTemp.setText( valueX + valueY +valueZ);
+                            txtTemp.setText("X:"+valueX + " Y:"+valueY +" Z:"+ valueZ);
+                            txt_xValue.setText(valueX);
+                            txt_yValue.setText(valueY);
+                            txt_zValue.setText(valueZ);
+
+                            double dvaluex = Double.parseDouble(valueX);
+                            double dvaluey = Double.parseDouble(valueY);
+                            double dvaluez = Double.parseDouble(valueZ);
+
+                            int ivaluex = (int) dvaluex;
+                            int ivaluey = (int) dvaluey;
+                            int ivaluez = (int) dvaluez;
+
+                            bar_X.setProgress(ivaluex);
+                            bar_Y.setProgress(ivaluey);
+                            bar_Z.setProgress(ivaluez);
+
+
+
+
+
                         }
                     });
                 } catch(JSONException je) {
