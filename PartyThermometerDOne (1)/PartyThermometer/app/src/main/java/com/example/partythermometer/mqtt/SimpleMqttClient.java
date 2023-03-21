@@ -3,6 +3,7 @@ package com.example.partythermometer.mqtt;
 import android.app.Activity;
 import android.util.Log;
 
+import com.hivemq.client.internal.mqtt.message.publish.MqttPublishBuilder;
 import com.hivemq.client.mqtt.MqttClientState;
 import com.hivemq.client.mqtt.datatypes.MqttQos;
 import com.hivemq.client.mqtt.mqtt3.Mqtt3AsyncClient;
@@ -18,6 +19,9 @@ import java.util.function.Consumer;
  * A wrapper class for easier usage of HiveMQ mqtt library
  */
 public class SimpleMqttClient {
+
+
+
 
     //region Callback class definitions
     private static abstract class MqttOperationResult<T> implements BiConsumer<T, Throwable> {
@@ -120,7 +124,7 @@ public class SimpleMqttClient {
         }
     }
 
-    public static abstract class MqttPublish extends MqttOperationResult<Mqtt3Publish> {
+    public static class MqttPublish extends MqttOperationResult<Mqtt3Publish> {
         private final String topic;
         private final String payload;
 
@@ -132,7 +136,7 @@ public class SimpleMqttClient {
             return payload;
         }
 
-        public MqttPublish(Activity activity, String topic, String payload) {
+        public MqttPublish(Activity activity,String topic, String payload) {
             super(activity);
             this.topic = topic;
             this.payload = payload;

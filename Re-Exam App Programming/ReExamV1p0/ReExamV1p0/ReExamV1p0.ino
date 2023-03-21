@@ -14,8 +14,8 @@ bool isReading = true;
 
 
 ///////////////// Set up wifi //////////////////////////
-char* ssid = "AndroidAP"; // Have your own ssid here
-char* password =  "kqdh1128"; // Have your own password here
+char* ssid = "FRITZ!Box 6660 Cable ES_Ext"; // Have your own ssid here
+char* password =  "50271227895200380657"; // Have your own password here
 const char* subscribeTopic = "APP/subscribe"; // Have your subscription topic in here
 const char* publishTopic = "APP/publish"; // Have your publish topic here
 const char* mqtt_Server =  "broker.mqtt-dashboard.com"; //

@@ -7,6 +7,8 @@ public class MqttMessage {
     private final String X;
     private final String Y;
     private final String Z;
+
+
     public MqttMessage(String X, String Y, String Z) {
        /* this.user = user;
         this.message = message;*/
