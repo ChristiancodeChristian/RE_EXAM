@@ -44,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
 
     //region Constants
     private static final String chatTopic = "APP/publish";
+    private static final String mqtt_publishTopic = "APP/subscribe";
+    private SimpleMqttClient mqtt_client;
 
     //endregion
 
@@ -228,6 +230,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
 
     //method publish message to MQTT topic
     private void publish(String topic, String payload) {
